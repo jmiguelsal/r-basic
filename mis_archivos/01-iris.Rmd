@@ -1,0 +1,28 @@
+---
+title: "Data Frame"
+author: "Curso de Estadística Descriptiva"
+date: "8/13/2019"
+output: html_document
+---
+
+# Data frame de Iris
+
+```{r}
+df = iris
+head(df,6)
+tail(df,6)
+str(df)
+names(df)
+colnames(df)
+rownames(df)
+dimnames(df)
+nrow(df)
+ncol(df)
+dim(df)
+df$Sepal.Length[5]
+df$Sepal.Length[1:10]
+df$Species[1:10]
+df
+
+```
+

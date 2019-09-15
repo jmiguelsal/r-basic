@@ -36,3 +36,8 @@ prop.table(table(sex, ans, place), margin = c(1, 3)) # Frec. Rel. Marg. por Sexo
 ftable(prop.table(table(sex, ans, place)))
 ```
 
+```{r}
+library(kableExtra)
+kable(HairEyeColor)
+```
+

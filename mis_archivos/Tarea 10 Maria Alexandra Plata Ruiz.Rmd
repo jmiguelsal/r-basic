@@ -1,0 +1,113 @@
+---
+title: "Tarea 10"
+author: "Curso de Estadística Descriptiva"
+date: "8/28/2019"
+output: html_document
+---
+## Utiliza str() y head() para explorar la estructura, y con help(), mirar el significado de cada variable.
+
+```{r}
+install.packages("MASS", dep =TRUE)
+
+library(MASS)
+bt=birthwt
+str(bt)
+head(bt,5)
+help("birthwt") 
+```
+
+## Calcula una tabla de frecuencias relativas marginales de los pares (raza de la madre, peso inferior a 2.5 kg o no) que permita ver si la raza de la madre influye en el peso del bebé.
+
+```{r}
+race <- factor(bt$race, labels = c("white", "black", "other"))
+low<-factor(bt$low, labels = c("no low", "si low"))
+prop.table(table(race,low), margin=1) # Frec Relativa Marginal de raza
+prop.table(table(race,low), margin=2) # Frec Relativa Marginal de peso
+```
+
+## Dibuja un diagrama de mosaico de la tabla del ejercicio anterior.
+
+```{r}
+plot(table(race,low), col="lightgreen", main= "Mosaico raza vs peso bajo en \n recien nacidos" )
+```
+
+## Dibuja un diagrama bidimensional de barras, con las barras organizadas en bloques, que permita visualizar la información de los ejercicios anteriores. Aprovecha para nombres adecuados a los bloques, colores a las barras, y añadir una leyenda que explique qué representa cada barra.
+
+```{r}
+barplot(prop.table(table(race,low), margin=1), beside =T, ylim = c(0,0.8),
+        legend.text = T, col=c("lightyellow", "burlywood", "lightpink"),
+        main = "Frecuencia relativa de raza de la madre en
+        \n peso bajo de bebe recien nacido")
+
+barplot(t(prop.table(table(race,low), margin=2)), beside = T, ylim = c(0,0.8),
+        legend.text = T, col=c("black", "red"),
+        main = "Frecuencia relativa de peso bajo de bebe por
+        \n raza de la madre")
+```
+
+## ¿Se puede obtener alguna conclusión de la tabla y el diagrama de barras anterior? Argumenta tu respuesta
+
+## La frecuecia de bebes de bajo peso por raza de la madre es inferior del 45% donde el mayor porcentaje es el de las madres de raza negra, seguido por otras razas y el menor porcentaje es el de la raza blanca. ( 42.31%, 37.31%, 23.96%, respectivamente). Al comparar por frecuencia de bebes de bajo peso mas del 60 de los bebes de de bajo peso son de madres de raza negra y otras razas.
+
+## Repite los cuatro ejercicios anteriores para los pares (madre fumadora o no, peso inferior a 2.5 kg o no) y para los pares (madre hipertensa o no, peso inferior a 2.5 kg o no.
+
+## Madres Fumadoras vs Peso bajo del bebe
+
+
+
+```{r}
+smoke<-factor(bt$smoke, labels = c("no fumadora", "fumadora"))
+low<-factor(bt$low, labels = c("no low", "si low"))
+table(smoke,low)
+round(prop.table(table(smoke,low), margin=1),3) # Frec Relativa Marginal de condicion de fumadora 
+round(prop.table(table(smoke,low), margin=2),3) # Frec Relativa Marginal de bajo peso del bebe
+
+plot(table(smoke,low), col="lightblue", main= "Mosaico raza vs peso bajo en \n recien nacidos" )
+
+barplot(prop.table(table(smoke,low), margin=1), beside = T, ylim = c(0,0.8),
+        legend.text = T, col=c("deepskyblue", "firebrick"),
+        main = "Frecuencia relativa de madre fumadora en
+        \n peso bajo de bebe recien nacido")
+
+barplot(t(prop.table(table(smoke,low), margin=2)), beside = T, ylim = c(0,0.8),
+        legend.text = T, col=c("black", "red"),
+        main = "Frecuencia relativa de peso bajo de bebe eb
+        \n madre fumadora")
+```
+
+## Condicion de madre hipertensa vs bajo Peso del bebe
+
+```{r}
+ht<-factor(bt$ht, labels = c("no hipertensa", "hipertensa"))
+low<-factor(bt$low, labels = c("no low", "si low"))
+table(ht,low)
+round(prop.table(table(ht,low), margin=1),3)  # Frec Relativa Marginal de condicion de hipertension de la madre 
+round(prop.table(table(ht,low), margin=2),3)  # Frec Relativa Marginal de condicion de bajo peso del bebe
+
+plot(table(ht,low), col="lightslateblue", main= "Mosaico raza vs peso bajo en \n recien nacidos" )
+
+barplot(prop.table(table(ht,low), margin=1), beside = T, ylim = c(0,0.8),
+        legend.text = T, col=c("lightyellow", "lightpink"),
+        main = "Frecuencia relativa de madre hipertensa en
+        \n peso bajo de bebe recien nacido")
+
+barplot(t(prop.table(table(ht,low), margin=2)), beside = T, ylim = c(0,1),
+        legend.text = T, col=c("black", "red"),
+        main = "Frecuencia relativa de peso bajo de bebe en
+        \n madre hipertensa")
+```
+
+## Calcula una tabla de frecuencias relativas marginales de las ternas (raza de la madre, madre fumadora o no, peso inferior a 2.5 kg o no) que permita ver si la raza de la madre y su condición de fumadora o no fumadora influyen en el peso del bebé.
+
+```{r}
+ftable(prop.table(table(race,smoke,low), margin = c(1,2)))
+```
+
+## Dibuja un diagrama de mosaico de la tabla del ejercicio anterior.
+
+```{r}
+plot(prop.table(table(race,smoke,low), margin = c(1,2)),
+     main= "Mosaico de Frecuencias relativa margina de raza y condicion de \n
+     fumadora de la madre en peso del bebe", col= "blue")
+```
+

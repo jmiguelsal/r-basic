@@ -1,0 +1,82 @@
+---
+title: "Medidas de los cangrejos"
+author: "Curso de Estadística Descriptiva"
+date: "9/11/2019"
+output: html_document
+---
+
+## Cargar los datos
+```{r}
+crabs = read.table("../data/datacrab.txt", header = TRUE)
+head(crabs)
+str(crabs)
+```
+
+## Omitimos la primera columna
+```{r}
+crabs = crabs[,-1]
+str(crabs)
+```
+
+- color = número de colores
+- spine = tipo de espina
+- width = anchura
+- satell = ?
+- weight = peso
+
+```{r}
+table(crabs$width)
+```
+
+## Vamos a convertir la variable width en una variable ordinal que agrupe las entradas de la variable original en niveles
+```{r}
+intervalos = cut(crabs$width, 
+                 breaks = c(21,25,29,33,Inf), 
+                 right = FALSE, # El extremo mayor se incluye en la izquierda
+                 labels = c("21-25", "25-29", "29-33", "33-...")
+                 )
+head(intervalos)
+crabs$width.rank = ordered(intervalos)
+str(crabs)
+```
+
+## Nos interesa estudiar la distribución de las anchuras de los cangrejos según el número de colores
+
+### Nos quedamos solo con las dos columnas que nos interesa: color y width.rank
+```{r}
+head(crabs)
+d = crabs[,c(1,6)]
+head(d)
+```
+
+### Frecuencias absolutas
+```{r}
+Tabla = table(d)
+Tabla
+```
+
+### Frecuencias relativas por filas (por color)
+```{r}
+Fr.rel = round(prop.table(Tabla, margin = 1), 3)
+Fr.rel
+```
+
+### Frecuencias relativas acumuladas por color
+```{r}
+Fr.rel.acu = round(apply(prop.table(Tabla, margin = 1), MARGIN = 1, FUN = cumsum), 3)
+Fr.rel.acu
+t(Fr.rel.acu)
+```
+
+### Representación gráfica
+```{r}
+azul = c("cyan", "cyan4", "cyan1", "cyan3")
+barplot(t(Fr.rel), beside = TRUE, legend = TRUE, ylim = c(0,1), col = azul, 
+        main = "Diagrama de barras de frecuencias relativas", 
+        args.legend=list(x = "topright", cex=0.55))
+
+barplot(Fr.rel.acu, beside = TRUE, legend = TRUE, ylim = c(0,1), col = azul, 
+        main = "Diagrama de barras de frecuencias relativas acumuladas", 
+        args.legend=list(x = "topright", cex=0.55))
+```
+

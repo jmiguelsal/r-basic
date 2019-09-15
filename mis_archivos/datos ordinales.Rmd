@@ -1,0 +1,60 @@
+---
+title: "Datos ordinales"
+author: "Curso de Estadística Descriptiva"
+date: "9/11/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Datos ordinales
+
+```{r}
+notas = ordered(
+  c("S","A", "N", "Ex", "S", "S", "Ex", "Ex", "N", "A", "A", "A", "A", "N", "S"), 
+  levels = c("S", "A", "N", "Ex")
+  )
+
+notas
+```
+
+### Frecuencias absolutas
+
+```{r}
+fAbs = table(notas)
+fAbs
+barplot(fAbs, main = "Diagrama de barras de frecuencias absolutas")
+```
+
+### Frecuencias absolutas acumuladas
+
+```{r}
+cumsum(fAbs)
+barplot(cumsum(fAbs), main = "Diagrama de barras de frecuencias absolutas acumuladas")
+```
+
+### Frecuencias relativas
+
+```{r}
+prop.table(fAbs)
+barplot(prop.table(fAbs), main = "Diagrama de barras de frecuencias relativas")
+```
+
+### Frecuencias relativas acumuladas
+
+```{r}
+cumsum(prop.table(fAbs))
+barplot(cumsum(prop.table(fAbs)), main = "Diagrama de barras de frecuencias relativas acumuladas")
+```
+
+#### Otra forma de calcular las frecuencias absolutas acumuladas
+
+```{r}
+cumsum(fAbs)/length(notas)
+cumsum(fAbs/length(notas))
+```
+
+
+

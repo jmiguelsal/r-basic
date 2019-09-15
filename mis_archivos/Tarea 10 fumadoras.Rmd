@@ -1,0 +1,130 @@
+---
+title: "Tarea 10 Fumadoras"
+author: "Curso de Estadística Descriptiva"
+date: "8/28/2019"
+output: html_document
+---
+
+## 1. Utiliza str() y head() para explorar la estructura, y con help(), mirar el significado de cada variable.
+
+```{r}
+library(MASS)
+```
+
+## 2. Calcula una tabla de frecuencias relativas marginales de los pares (madre fumadora, peso del bebé) que permita ver si el fumar influye en el peso del bebé.
+
+```{r}
+bt <- birthwt
+
+smoke <- factor(bt$smoke, labels=c("No", "Si"))
+peso <- factor(bt$low, labels=c("Normal", "Bajo"))
+
+sp <- table(smoke, peso)
+
+fsp <- round(prop.table(sp),3)
+
+fsp1 <- round(prop.table(sp, margin=1),3)
+
+fsp2 <- round(prop.table(sp, margin=2),3)
+```
+
+### Tabla de frecuencias absolutas
+```{r}
+sp
+```
+
+### Tabla de frecuencias relativas globales
+```{r}
+fsp
+```
+
+### Tabla de frecuencias marginales por madre fumadora
+```{r}
+fsp1
+```
+
+### Tabla de frecuencias marginales por peso del bebe
+```{r}
+fsp2
+```
+
+## 3. Dibuja un diagrama de mosaico de la tabla del ejercicio anterior.
+
+```{r}
+plot(fsp, xlab="Fumadora", ylab="Peso", main="Frecuencias relativas globales")
+plot(t(fsp), xlab="Peso", ylab="Fumadora", main="Frecuencias relativas globales")
+
+plot(fsp1, xlab="Fumadora", ylab="Peso", main="Frecuencias relativas marginales por madre fumadora")
+# plot(t(fsp1), xlab="Peso", ylab="Fumadora", main="Frecuencias relativas marginales por madre fumadora")
+
+# plot(fsp2, xlab="Fumadora", ylab="Peso", main="Frecuencias relativas marginales por peso del bebé")
+plot(t(fsp2), xlab="Peso", ylab="Fumadora", main="Frecuencias relativas marginales por peso del bebé")
+```
+
+## 4. Dibuja un diagrama bidimensional de barras, con las barras organizadas en bloques, que permita visualizar la información de los ejercicios anteriores. Aprovecha para nombres adecuados a los bloques, colores a las barras, y añadir una leyenda que explique qué representa cada barra.
+
+```{r}
+barplot(
+  fsp,
+  beside=TRUE,
+  legend.text=TRUE,
+  xlab = "Peso",
+  ylab = "Fumadora",
+  m = "Frecuencias relativas globales",
+  ylim = c(0, 0.5)
+  )
+
+barplot(
+  t(fsp),
+  beside=TRUE,
+  legend.text=TRUE,
+  xlab = "Fumadora",
+  ylab = "Peso",
+  m = "Frecuencias relativas globales",
+  ylim = c(0, 0.5)
+  )
+
+barplot(
+  fsp1,
+  beside=TRUE,
+  legend.text=TRUE,
+  xlab = "Peso",
+  ylab = "Fumadora",
+  m = "Frecuencias relativas marginales por madres fumadoras",
+  ylim = c(0, 0.8)
+  )
+
+barplot(
+  t(fsp1),
+  beside=TRUE,
+  legend.text=TRUE,
+  xlab = "Fumadora",
+  ylab = "Peso",
+  m = "Frecuencias relativas globales por madres fumadoras",
+  ylim = c(0, 0.8)
+  )
+
+barplot(
+  fsp2,
+  beside=TRUE,
+  legend.text=TRUE,
+  xlab = "Peso",
+  ylab = "Fumadora",
+  m = "Frecuencias relativas marginales por peso del bebé",
+  ylim = c(0, 0.7)
+  )
+
+barplot(
+  t(fsp2),
+  beside=TRUE,
+  legend.text=TRUE,
+  xlab = "Fumadora",
+  ylab = "Peso",
+  m = "Frecuencias relativas globales por peso del bebé",
+  ylim = c(0, 0.7)
+  )
+```
+
+
+
+
